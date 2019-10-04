@@ -1,3 +1,7 @@
+package Server;
+
+import com.sun.security.ntlm.Server;
+import org.glassfish.jersey.server.ResourceConfig;
 import org.sqlite.SQLiteConfig;
 
 import java.io.FileReader;
@@ -10,11 +14,36 @@ public class Main {
 
     public static Connection db = null;
 
+
+/*  public static void main(String[] args) {
+     openDatabase("CourseWork.db");
+     code to get data from here
+   closeDatabase();
+     }*/
+
     public static void main(String[] args) {
-    openDatabase("CourseWork.db");
-    // code to get data from here
-    closeDatabase();
+
+        openDatabase("CourseWork.db");
+
+        ResourceConfig config = new ResourceConfig();
+        config.packages("Controllers");
+        config.register(MultiPartFeature.class);
+        ServletHolder servlet = new ServletHolder(new ServletContainer(config));
+
+        Server server = new Server(8081);
+        ServletContextHandler context = new ServletContextHandler(server, "/");
+        context.addServlet(servlet, "/*");
+
+        try {
+            server.start();
+            System.out.println("Server successfully started.");
+            server.join();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
+
 
     private static void openDatabase(String dbFile){
         try{
