@@ -1,7 +1,11 @@
 package Server;
 
-import com.sun.security.ntlm.Server;
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.servlet.ServletHolder;
+import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.server.ResourceConfig;
+import org.glassfish.jersey.servlet.ServletContainer;
 import org.sqlite.SQLiteConfig;
 
 import java.io.FileReader;
@@ -13,7 +17,6 @@ import java.sql.DriverManager;
 public class Main {
 
     public static Connection db = null;
-
 
 /*  public static void main(String[] args) {
      openDatabase("CourseWork.db");
