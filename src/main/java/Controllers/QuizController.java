@@ -11,7 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 
-public class ListQuizzes {
+public class QuizController {
 
     public static void ListQuizzes() {
         try {
