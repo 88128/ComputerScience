@@ -20,8 +20,8 @@ public class QuestionController {
             ResultSet results = ps.executeQuery();
             while (results.next()) {
                 String QuestionName = results.getString(1);
-                int QuizID = results.getInt(3);
-                int QuestionNumber = results.getInt(4);
+                int QuizID = results.getInt(2);
+                int QuestionNumber = results.getInt(3);
                 int QuestionID = results.getInt(4);
             }
 
@@ -33,7 +33,7 @@ public class QuestionController {
     @GET
     @Path("list")
     @Produces(MediaType.APPLICATION_JSON)
-    public String listUsers() {
+    public String listQuestions() {
         System.out.println("Coursework/list/Question");
         JSONArray list = new JSONArray();
         try {
@@ -41,10 +41,11 @@ public class QuestionController {
             ResultSet results = ps.executeQuery();
             while (results.next()) {
                 JSONObject item = new JSONObject();
-                item.put("Name", results.getString(2));
-                item.put("Name", results.getString(2));
-                item.put("UserPassword", results.getString(3));
-
+                item.put("QuestionName", results.getString(1));
+                item.put("QuizID", results.getInt(2));
+                item.put("QuestionNumber", results.getInt(3));
+                item.put("QuestionID", results.getInt(4));
+                list.add(item);
             }
 
             return list.toString();
