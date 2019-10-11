@@ -10,10 +10,10 @@ import javax.ws.rs.core.MediaType;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-
+@Path ("Quiz/")
 public class QuizController {
 
-    public static void ListQuizzes() {
+    public static void Quizzes() {
         try {
 
             PreparedStatement ps = Main.db.prepareStatement("SELECT QuizTitle, QuizSkillLevel, QuizId FROM Quizzes");
@@ -40,9 +40,12 @@ public class QuizController {
             ResultSet results = ps.executeQuery();
             while (results.next()) {
                 JSONObject item = new JSONObject();
-                String QuizTitle = results.getString(1);
-                int QuizSkillLevel = results.getInt(2);
-                int QuizID = results.getInt(3);
+                item.put("QuizTitle", results.getString(1));
+                item.put("QuizSkillLevel", results.getInt(2));
+                item.put("QuizID", results.getInt(3));
+                list.add(item);
+
+
             }
             return list.toString();
         } catch (Exception exception) {
