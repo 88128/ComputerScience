@@ -3,10 +3,7 @@ import Server.Main;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -30,23 +27,22 @@ public class ScoreController {
     }
 
     @GET
-    @Path("get")
+    @Path("get/{Username}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getThing(@PathParam("UserName") String Username){
-        if (id == null) {
-            throw new Exception("Thing's 'id' is missing in the HTTP request's URL.");
-        }
-        System.out.println("thing/get/" + UserName);
-        JSONObject item = new JSONObject();
+    public String getThing(@PathParam("Username") String UserName){
         try {
-            PreparedStatement ps = Main.db.prepareStatement("SELECT UserName, Scores FROM Things WHERE UserName");
-            ps.setInt(1, id);
+            if (UserName == null) {
+                throw new Exception("Scores' 'Username' is missing in the HTTP request's URL.");
+            }
+            System.out.println("Users/get/" + UserName);
+            JSONObject item = new JSONObject();
+
+            PreparedStatement ps = Main.db.prepareStatement("SELECT UserName, TotalScore FROM Scores WHERE UserName = ?");
+            ps.setString(1, UserName);
             ResultSet results = ps.executeQuery();
             if (results.next()) {
-                JSONObject item = new JSONObject();
                 item.put("UserName",UserName);
                 item.put("TotalScore", results.getInt(2));
-                get.add(item);
             }
             return item.toString();
         } catch (Exception exception) {
