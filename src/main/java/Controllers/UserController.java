@@ -1,6 +1,7 @@
 package Controllers;
         import Server.Main;
-        import com.sun.jersey.multipart.FormDataParam;
+
+        import org.glassfish.jersey.media.multipart.FormDataParam;
         import org.json.simple.JSONArray;
         import org.json.simple.JSONObject;
 
@@ -33,17 +34,17 @@ public class UserController {
     @Path("new")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
-    public String insertThing(@FormDataParam("UserSkillLevel") Integer UserSkillLevel, @FormDataParam("UserName") String UserName){
+    public String insertThing(@FormDataParam("UserSkillLevel") Integer UserSkillLevel, @FormDataParam("UserName") String UserName, @FormDataParam("UserPassword") String UserPassword){
         try {
-            if (id == null || name == null ||  == null) {
+            if (UserPassword == null || UserSkillLevel == null || UserName == null) {
                 throw new Exception("One or more form data parameters are missing in the HTTP request.");
             }
-            System.out.println("thing/new id=" + id);
+            System.out.println("thing/new UserName=" + UserName);
 
-            PreparedStatement ps = Main.db.prepareStatement("INSERT INTO Things (Id, Name, Quantity) VALUES (?, ?, ?)");
-            ps.setInt(1, id);
-            ps.setString(2, name);
-            ps.setInt(3, quantity);
+            PreparedStatement ps = Main.db.prepareStatement("INSERT INTO Users (Username, UserPassword, UserSkillLevel) VALUES (?, ?, ?)");
+            ps.setString(1, UserName);
+            ps.setString(2, UserPassword);
+            ps.setInt(3, UserSkillLevel);
             ps.execute();
             return "{\"status\": \"OK\"}";
 
@@ -52,8 +53,6 @@ public class UserController {
             return "{\"error\": \"Unable to create new item, please see server console for more info.\"}";
         }
     }
-
-
     @GET
     @Path("get/{Username}")
     @Produces(MediaType.APPLICATION_JSON)
