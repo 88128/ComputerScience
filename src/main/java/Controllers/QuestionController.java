@@ -45,11 +45,10 @@ public class QuestionController {
             ps.setString(1, QuizID);
             ResultSet results = ps.executeQuery();
             if (results.next()) {
-                item.put("QuestionName", results.getString(4));
+                item.put("QuestionName", results.getString(1));
                 item.put("QuizID",QuizID);
-
                 item.put("QuestionNumber", results.getInt(3));
-                item.put("QuestionID", results.getInt(2));
+                item.put("QuestionID", results.getInt(4));
             }
             return item.toString();
         } catch (Exception exception) {
@@ -57,7 +56,6 @@ public class QuestionController {
             return "{\"error\": \"Unable to get item, please see server console for more info.\"}";
         }
     }
-
 
     @GET
     @Path("list")

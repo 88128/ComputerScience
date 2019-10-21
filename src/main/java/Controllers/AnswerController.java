@@ -75,6 +75,31 @@ public class AnswerController {
     */
 
     @GET
+    @Path("get/{QuestionID}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getThing(@PathParam("QuestionID") String QuestionID){
+        try {
+            if (QuestionID == null) {
+                throw new Exception("QuestionID is missing in the HTTP request's URL.");
+            }
+            System.out.println("Question/get/" + QuestionID);
+            JSONObject item = new JSONObject();
+            PreparedStatement ps = Main.db.prepareStatement("SELECT QuestionID, Answer, Correct FROM Answers WHERE QuestionID = ?");
+            ps.setString(1, QuestionID);
+            ResultSet results = ps.executeQuery();
+            if (results.next()) {
+                item.put("QuestionID",QuestionID);
+                item.put("Answer", results.getString(2));
+                item.put("Correct", results.getBoolean(3));
+            }
+            return item.toString();
+        } catch (Exception exception) {
+            System.out.println("Database error: " + exception.getMessage());
+            return "{\"error\": \"Unable to get item, please see server console for more info.\"}";
+        }
+    }
+
+    @GET
     @Path("list")
     @Produces(MediaType.APPLICATION_JSON)
     public String listAnswers() {
