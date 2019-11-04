@@ -30,6 +30,8 @@ public class UserController {
         }
     }
 
+
+
     @POST
     @Path("new")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
@@ -79,6 +81,32 @@ public class UserController {
         } catch (Exception exception) {
             System.out.println("Database error: " + exception.getMessage());
             return "{\"error\": \"Unable to get item, please see server console for more info.\"}";
+        }
+    }
+
+    @POST
+    @Path("delete")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Produces(MediaType.APPLICATION_JSON)
+    public String deleteThing(@FormDataParam("UserID") Integer UserID) {
+
+        try {
+            if (UserID == null) {
+                throw new Exception("One or more form data parameters are missing in the HTTP request.");
+            }
+            System.out.println("thing/delete UserID=" + UserID);
+
+            PreparedStatement ps = Main.db.prepareStatement("DELETE FROM Users WHERE UserID = ?");
+
+            ps.setInt(1, UserID);
+
+            ps.execute();
+
+            return "{\"status\": \"OK\"}";
+
+        } catch (Exception exception) {
+            System.out.println("Database error: " + exception.getMessage());
+            return "{\"error\": \"Unable to delete item, please see server console for more info.\"}";
         }
     }
 

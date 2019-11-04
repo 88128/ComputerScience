@@ -1,5 +1,6 @@
 package Controllers;
 import Server.Main;
+import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -25,6 +26,30 @@ public class ScoreController {
             System.out.println("Database Error:" + exception.getMessage());
         }
     }
+
+    @POST
+    @Path("update")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Produces(MediaType.APPLICATION_JSON)
+    public String updateThing(	@FormDataParam("UserName") String UserName, @FormDataParam("TotalScore") Integer TotalScore) {
+        try {
+            if (UserName == null || TotalScore == null) {
+                throw new Exception("One or more form data parameters are missing in the HTTP request.");
+            }
+            System.out.println("Scores/update UserName=" + UserName);
+
+            PreparedStatement ps = Main.db.prepareStatement("UPDATE Scores SET TotalScore = ? WHERE UserName=?");
+            ps.setString(1, UserName);
+            ps.setInt(2, TotalScore);
+            ps.execute();
+            return "{\"status\": \"OK\"}";
+
+        } catch (Exception exception) {
+            System.out.println("Database error: " + exception.getMessage());
+            return "{\"error\": \"Unable to update item, please see server console for more info.\"}";
+        }
+    }
+
 
     @GET
     @Path("get/{Username}")
