@@ -84,13 +84,16 @@ public class AnswerController {
             }
             System.out.println("Question/get/" + QuestionID);
             JSONObject item = new JSONObject();
-            PreparedStatement ps = Main.db.prepareStatement("SELECT QuestionID, Answer, Correct FROM Answers WHERE QuestionID = ?");
+            // JSONArray list = new JSONArray();
+            PreparedStatement ps = Main.db.prepareStatement("SELECT QuestionID, Answer, Correct FROM Answers");
             ps.setString(1, QuestionID);
             ResultSet results = ps.executeQuery();
-            if (results.next()) {
+
+            while (results.next()) {
                 item.put("QuestionID",QuestionID);
                 item.put("Answer", results.getString(2));
                 item.put("Correct", results.getBoolean(3));
+            //    list.add(item);
             }
             return item.toString();
         } catch (Exception exception) {
@@ -100,13 +103,13 @@ public class AnswerController {
     }
 
     @GET
-    @Path("list")
+    @Path("list/")
     @Produces(MediaType.APPLICATION_JSON)
     public String listAnswers() {
         System.out.println("Coursework/Answer/list");
         JSONArray list = new JSONArray();
         try {
-            PreparedStatement ps = Main.db.prepareStatement("SELECT QuestionID, Answer, Correct FROM Answers");
+            PreparedStatement ps = Main.db.prepareStatement("SELECT QuestionID, Answer, Correct FROM Answers WHERE QuestionID=?");
             ResultSet results = ps.executeQuery();
             while (results.next()) {
                 JSONObject item = new JSONObject();

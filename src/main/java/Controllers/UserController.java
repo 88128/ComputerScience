@@ -66,7 +66,7 @@ public class UserController {
             System.out.println("thing/get/" + UserName);
             JSONObject item = new JSONObject();
 
-            PreparedStatement ps = Main.db.prepareStatement("SELECT UserID, UserName, UserPassword, UserSkillLevel, UserToken FROM Users WHERE UserName = ?");
+            PreparedStatement ps = Main.db.prepareStatement("SELECT UserName, UserPassword, UserSkillLevel FROM Users WHERE UserName = ?");
             ps.setString(1, UserName);
 
             ResultSet results = ps.executeQuery();

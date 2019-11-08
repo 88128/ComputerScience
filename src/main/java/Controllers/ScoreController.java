@@ -39,8 +39,8 @@ public class ScoreController {
             System.out.println("Scores/update UserName=" + UserName);
 
             PreparedStatement ps = Main.db.prepareStatement("UPDATE Scores SET TotalScore = ? WHERE UserName=?");
-            ps.setString(1, UserName);
-            ps.setInt(2, TotalScore);
+            ps.setInt(1, TotalScore);
+            ps.setString(2, UserName);
             ps.execute();
             return "{\"status\": \"OK\"}";
 
