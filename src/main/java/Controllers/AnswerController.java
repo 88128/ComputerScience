@@ -83,19 +83,20 @@ public class AnswerController {
                 throw new Exception("QuestionID is missing in the HTTP request's URL.");
             }
             System.out.println("Question/get/" + QuestionID);
-            JSONObject item = new JSONObject();
-            // JSONArray list = new JSONArray();
-            PreparedStatement ps = Main.db.prepareStatement("SELECT QuestionID, Answer, Correct FROM Answers");
+
+            JSONArray list = new JSONArray();
+            PreparedStatement ps = Main.db.prepareStatement("SELECT QuestionID, Answer, Correct FROM Answers WHERE QuestionID = ?");
             ps.setString(1, QuestionID);
             ResultSet results = ps.executeQuery();
 
             while (results.next()) {
+                JSONObject item = new JSONObject();
                 item.put("QuestionID",QuestionID);
-                item.put("Answer", results.getString(2));
-                item.put("Correct", results.getBoolean(3));
-            //    list.add(item);
+                item.put("Answer", results.getString(1));
+                item.put("Correct", results.getBoolean(2));
+                list.add(item);
             }
-            return item.toString();
+            return list.toString();
         } catch (Exception exception) {
             System.out.println("Database error: " + exception.getMessage());
             return "{\"error\": \"Unable to get item, please see server console for more info.\"}";

@@ -31,7 +31,7 @@ public class QuestionController {
         }
     }
 
-    @GET
+   /* @GET
     @Path("get/{QuizID}")
     @Produces(MediaType.APPLICATION_JSON)
     public String getThing(@PathParam("QuizID") String QuizID){
@@ -55,9 +55,40 @@ public class QuestionController {
             System.out.println("Database error: " + exception.getMessage());
             return "{\"error\": \"Unable to get item, please see server console for more info.\"}";
         }
-    }
+    } */
 
     @GET
+    @Path("get/{QuizID}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getThing(@PathParam("QuizID") String QuizID){
+        try {
+            if (QuizID == null) {
+                throw new Exception("QuizID is missing in the HTTP request's URL.");
+            }
+            System.out.println("Question/get/" + QuizID);
+
+            JSONArray list = new JSONArray();
+            PreparedStatement ps = Main.db.prepareStatement("SELECT QuestionName, QuizID, QuestionNumber, QuestionID FROM Questions WHERE QuizID = ?");
+            ps.setString(1, QuizID);
+            ResultSet results = ps.executeQuery();
+
+            while (results.next()) {
+                JSONObject item = new JSONObject();
+                item.put("QuestionName", results.getString(1));
+                item.put("QuizID",QuizID);
+                item.put("QuestionNumber", results.getInt(3));
+                item.put("QuestionID", results.getInt(4));
+
+                list.add(item);
+            }
+            return list.toString();
+        } catch (Exception exception) {
+            System.out.println("Database error: " + exception.getMessage());
+            return "{\"error\": \"Unable to get item, please see server console for more info.\"}";
+        }
+    }
+
+   @GET
     @Path("list")
     @Produces(MediaType.APPLICATION_JSON)
     public String listQuestions() {
@@ -80,5 +111,5 @@ public class QuestionController {
             System.out.println("Database error: " + exception.getMessage());
             return "{\"error\": \"Unable to list items, please see server console for more info.\"}";
         }
-    }
+     }
 }
