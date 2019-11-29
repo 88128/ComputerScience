@@ -1,29 +1,30 @@
+function descendingScoreOrder(s1, s2) {
+    return Number(s2.UserScore) - Number(s1.UserScore);
+}
+
 function pageLoad() {
-    let LeaderboardHTML = '<table>' +
+
+    let leaderboardHTML = `<table>` +
         '<tr>' +
-        '<th>UserNames</th>' +
-        '<th>Scores</th>' +
-        // '<th class="last">Options</th>' +
+        '<th>UserName</th>' +
+        '<th>UserScore</th>' +
         '</tr>';
 
-    fetch('/Scores/list', {method: 'get'}
+    fetch('/Users/listscores', {method: 'get'}
     ).then(response => response.json()
-    ).then(Scores => {
+    ).then(scores => {
 
-        for (let TotalScore of Scores) {
+        for (let score of scores.sort(descendingScoreOrder)) {
 
-            LeaderboardHTML += `<tr>` +
-                `<td>${Scores.UserName}</td>` +
-                `<td>${Scores.TotalScore}</td>` +
-                `</td>` +
+            leaderboardHTML += `<tr>` +
+                `<td>${score.UserName}</td>` +
+                `<td>${score.UserScore}</td>` +
                 `</tr>`;
-
         }
-        LeaderboardHTML += '</table>';
 
-        document.getElementById("listDiv").innerHTML = LeaderboardHTML;
+        leaderboardHTML += '</table>';
 
-    }
+        document.getElementById("listDiv").innerHTML = leaderboardHTML;
 
-
-
+    });
+}

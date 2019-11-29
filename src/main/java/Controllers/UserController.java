@@ -31,7 +31,28 @@ public class UserController {
         }
     }
 
+    @POST
+    @Path("update")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Produces(MediaType.APPLICATION_JSON)
+    public String updateThing(	@FormDataParam("UserName") String UserName, @FormDataParam("UserScore") Integer UserScore) {
+        try {
+            if (UserName == null || UserScore == null) {
+                throw new Exception("One or more form data parameters are missing in the HTTP request.");
+            }
+            System.out.println("Scores/update UserName=" + UserName);
 
+            PreparedStatement ps = Main.db.prepareStatement("UPDATE Users SET UserScore = ? WHERE UserName=?");
+            ps.setInt(1, UserScore);
+            ps.setString(2, UserName);
+            ps.execute();
+            return "{\"status\": \"OK\"}";
+
+        } catch (Exception exception) {
+            System.out.println("Database error: " + exception.getMessage());
+            return "{\"error\": \"Unable to update item, please see server console for more info.\"}";
+        }
+    }
 
     @POST
     @Path("new")
@@ -56,6 +77,7 @@ public class UserController {
             return "{\"error\": \"Unable to create new item, please see server console for more info.\"}";
         }
     }
+
     @GET
     @Path("get/{Username}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -67,16 +89,16 @@ public class UserController {
             System.out.println("thing/get/" + UserName);
             JSONObject item = new JSONObject();
 
-            PreparedStatement ps = Main.db.prepareStatement("SELECT UserName, UserPassword, UserSkillLevel FROM Users WHERE UserName = ?");
+            PreparedStatement ps = Main.db.prepareStatement("SELECT UserID, UserName, UserPassword, UserSkillLevel, UserToken, UserScore FROM Users WHERE UserName = ?");
             ps.setString(1, UserName);
 
             ResultSet results = ps.executeQuery();
             if (results.next()) {
                 item.put("UserID", results.getInt(1));
-                item.put("UserName", UserName);
                 item.put("UserPassword", results.getString(3));
                 item.put("UserSkillLevel", results.getInt(4));
                 item.put("UserToken", results.getString(5));
+                item.put("UserScore", results.getInt(6));
             }
             return item.toString();
         } catch (Exception exception) {
@@ -111,6 +133,32 @@ public class UserController {
         }
     }
 
+    @GET
+    @Path("getscore/{Username}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getscore(@PathParam("Username") String UserName){
+        try {
+            if (UserName == null) {
+                throw new Exception("Thing's 'Username' is missing in the HTTP request's URL.");
+            }
+            System.out.println("thing/get/" + UserName);
+            JSONObject item = new JSONObject();
+
+            PreparedStatement ps = Main.db.prepareStatement("SELECT UserName, UserScore FROM Users WHERE UserName = ?");
+            ps.setString(1, UserName);
+
+            ResultSet results = ps.executeQuery();
+            if (results.next()) {
+                item.put("Username", results.getString(1));
+                item.put("UserScore", results.getInt(2));
+            }
+            return item.toString();
+        } catch (Exception exception) {
+            System.out.println("Database error: " + exception.getMessage());
+            return "{\"error\": \"Unable to get item, please see server console for more info.\"}";
+        }
+    }
+
 
     @GET
     @Path("list")
@@ -127,6 +175,29 @@ public class UserController {
                 item.put("UserName", results.getString(2));
                 item.put("UserPassword", results.getString(3));
                 item.put("UserSkillLevel", results.getInt(4));
+                list.add(item);
+            }
+
+            return list.toString();
+        } catch (Exception exception) {
+            System.out.println("Database error: " + exception.getMessage());
+            return "{\"error\": \"Unable to list items, please see server console for more info.\"}";
+        }
+    }
+
+    @GET
+    @Path("listscores")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String listScores() {
+        System.out.println("Coursework/listscores");
+        JSONArray list = new JSONArray();
+        try {
+            PreparedStatement ps = Main.db.prepareStatement("SELECT UserName, UserScore FROM Users");
+            ResultSet results = ps.executeQuery();
+            while (results.next()) {
+                JSONObject item = new JSONObject();
+                item.put("UserName", results.getString(1));
+                item.put("UserScore", results.getInt(2));
                 list.add(item);
             }
 
