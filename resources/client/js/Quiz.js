@@ -4,7 +4,7 @@ function pageLoad() {
     ).then(response => response.json()
     ).then(questions => {
         for (let question of questions) {
-            
-
         }
-}
+
+
+    }

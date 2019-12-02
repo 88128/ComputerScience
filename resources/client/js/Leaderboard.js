@@ -25,6 +25,5 @@ function pageLoad() {
         leaderboardHTML += '</table>';
 
         document.getElementById("listDiv").innerHTML = leaderboardHTML;
-
     });
 }
