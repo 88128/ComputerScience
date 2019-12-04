@@ -20,14 +20,15 @@ public class AnswerController {
                 //list for phase 2
             //JSONArray list = new JSONArray();
 
-            PreparedStatement ps = Main.db.prepareStatement("SELECT QuestionID, Answer, Correct FROM Answers");
+            PreparedStatement ps = Main.db.prepareStatement("SELECT AnswerID, QuestionID, Answer, Correct FROM Answers");
             ResultSet results = ps.executeQuery();
             while (results.next()) {
 
                 //phase 1
-                int QuestionID = results.getInt(1);
-                String Answer = results.getString(2);
-                Boolean Correct = results.getBoolean(3);
+                int AnswerID = results.getInt(1);
+                int QuestionID = results.getInt(2);
+                String Answer = results.getString(3);
+                Boolean Correct = results.getBoolean(4);
 
                 //phase 2 - get item and add to list
                 //JSONObject item = new JSONObject();
@@ -85,15 +86,15 @@ public class AnswerController {
             System.out.println("Question/get/" + QuestionID);
 
             JSONArray list = new JSONArray();
-            PreparedStatement ps = Main.db.prepareStatement("SELECT QuestionID, Answer, Correct FROM Answers WHERE QuestionID = ?");
+            PreparedStatement ps = Main.db.prepareStatement("SELECT AnswerID, Answer, Correct FROM Answers WHERE QuestionID = ?");
             ps.setString(1, QuestionID);
             ResultSet results = ps.executeQuery();
 
             while (results.next()) {
                 JSONObject item = new JSONObject();
-                item.put("QuestionID",QuestionID);
-                item.put("Answer", results.getString(1));
-                item.put("Correct", results.getBoolean(2));
+                item.put("AnswerID", results.getString(1));
+                item.put("Answer", results.getString(2));
+                item.put("Correct", results.getBoolean(3));
                 list.add(item);
             }
             return list.toString();
@@ -110,13 +111,14 @@ public class AnswerController {
         System.out.println("Coursework/Answer/list");
         JSONArray list = new JSONArray();
         try {
-            PreparedStatement ps = Main.db.prepareStatement("SELECT QuestionID, Answer, Correct FROM Answers WHERE QuestionID=?");
+            PreparedStatement ps = Main.db.prepareStatement("SELECT AnswerID, QuestionID, Answer, Correct FROM Answers WHERE QuestionID=?");
             ResultSet results = ps.executeQuery();
             while (results.next()) {
                 JSONObject item = new JSONObject();
-                item.put("QuestionID", results.getInt(1));
-                item.put("Answer", results.getString(2));
-                item.put("Correct", results.getBoolean(3));
+                item.put("AnswerID", results.getInt(1));
+                item.put("QuestionID", results.getInt(2));
+                item.put("Answer", results.getString(3));
+                item.put("Correct", results.getBoolean(4));
                 list.add(item);
             }
 
