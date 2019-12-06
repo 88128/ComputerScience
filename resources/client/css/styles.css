@@ -36,6 +36,26 @@ th.last {
     text-align: right;
 }
 
+.loginDiv {
+    font-size: 14pt;
+    margin-top: 40px;
+    margin-left: 20px;
+}
+
+#username, #password {
+    margin-left: 20px;
+    font-size: 14pt;
+}
+
+#loginButton {
+    width: 200px;
+    background-color: cornflowerblue;
+}
+
+#loginButton:hover {
+    background-color: dodgerblue;
+}
+
 #pageHeader {
     margin-bottom: 20px;
     border-bottom: 25px solid black;

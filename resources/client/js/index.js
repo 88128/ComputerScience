@@ -13,5 +13,4 @@ function pageLoad() {
         + '</div>';
 
     document.getElementById("testDiv").innerHTML = myHTML;
-
 }

@@ -209,12 +209,61 @@ public class UserController {
     }
 
     @POST
+    @Path("logout")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Produces(MediaType.APPLICATION_JSON)
+    public String logoutUser(@CookieParam("UserToken") String UserToken) {
+
+        try {
+
+            System.out.println("user/logout");
+
+            PreparedStatement ps1 = Main.db.prepareStatement("SELECT UserID, UserToken FROM Users WHERE UserToken = ?");
+            ps1.setString(1, UserToken);
+            ResultSet logoutResults = ps1.executeQuery();
+            if (logoutResults.next()) {
+                int UserID = logoutResults.getInt(1);
+                PreparedStatement ps2 = Main.db.prepareStatement("UPDATE Users SET UserToken = NULL WHERE UserID = ?");
+                ps2.setInt(1, UserID);
+                ps2.executeUpdate();
+
+                return "{\"status\": \"OK\"}";
+            } else {
+
+                return "{\"error\": \"Invalid token!\"}";
+
+            }
+
+        } catch (Exception exception){
+            System.out.println("Database error during /user/logout: " + exception.getMessage());
+            return "{\"error\": \"Server side error!\"}";
+        }
+
+    }
+
+    public static boolean validToken(String UserToken) {
+        try {
+            PreparedStatement ps = Main.db.prepareStatement("SELECT UserID FROM Users WHERE UserToken = ?");
+            ps.setString(1, UserToken);
+            ResultSet logoutResults = ps.executeQuery();
+            return logoutResults.next();
+        } catch (Exception exception) {
+            System.out.println("Database error during /user/logout: " + exception.getMessage());
+            return false;
+        }
+    }
+
+@POST
     @Path("login")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
     public String loginUser(@FormDataParam("UserName") String UserName, @FormDataParam("UserPassword") String UserPassword) {
 
-        try {
+    try {
+
+        if (UserName == null || UserPassword == null) {
+            throw new Exception("Something is missing in the HTTP request.");
+        }
             PreparedStatement ps1 = Main.db.prepareStatement("SELECT UserPassword FROM Users WHERE UserName = ?");
             ps1.setString(1, UserName);
             ResultSet loginResults = ps1.executeQuery();
