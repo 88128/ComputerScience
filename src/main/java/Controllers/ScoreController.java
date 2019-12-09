@@ -31,7 +31,8 @@ public class ScoreController {
     @Path("update")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
-    public String updateThing(	@FormDataParam("UserName") String UserName, @FormDataParam("TotalScore") Integer TotalScore) {
+    public String updateThing(	@FormDataParam("UserName") String UserName, @FormDataParam("TotalScore") Integer TotalScore, @CookieParam("UserToken") String UserToken) {
+
         try {
             if (UserName == null || TotalScore == null) {
                 throw new Exception("One or more form data parameters are missing in the HTTP request.");
@@ -43,7 +44,6 @@ public class ScoreController {
             ps.setString(2, UserName);
             ps.execute();
             return "{\"status\": \"OK\"}";
-
         } catch (Exception exception) {
             System.out.println("Database error: " + exception.getMessage());
             return "{\"error\": \"Unable to update item, please see server console for more info.\"}";

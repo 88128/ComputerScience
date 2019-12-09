@@ -10,14 +10,25 @@ package Controllers;
         import java.sql.PreparedStatement;
         import java.sql.ResultSet;
         import java.util.UUID;
-
 @Path ("Users/")
 public class UserController {
+
+    public static boolean validUserToken(String UserToken) {
+        try {
+            PreparedStatement ps = Main.db.prepareStatement("SELECT UserName FROM Users WHERE UserToken = ?");
+            ps.setString(1, UserToken);
+            ResultSet logoutResults = ps.executeQuery();
+            return logoutResults.next();
+        } catch (Exception exception) {
+            System.out.println("Database error" + exception.getMessage());
+            return false;
+        }
+    }
 
     public static void ListUsers() {
         try {
 
-            PreparedStatement ps = Main.db.prepareStatement("SELECT UserID, UserName, Userpassword,UserSkillLevel,UserToken FROM Users");
+            PreparedStatement ps = Main.db.prepareStatement("SELECT UserID, UserName, UserPassword,UserSkillLevel,UserToken FROM Users");
             ResultSet results = ps.executeQuery();
             while (results.next()) {
                 String UserName = results.getString(1);
@@ -35,11 +46,14 @@ public class UserController {
     @Path("update")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
-    public String updateThing(	@FormDataParam("UserName") String UserName, @FormDataParam("UserScore") Integer UserScore) {
+    public String updateThing(	@FormDataParam("UserName") String UserName, @FormDataParam("UserScore") Integer UserScore, @CookieParam("UserToken") String UserToken) {
         try {
             if (UserName == null || UserScore == null) {
                 throw new Exception("One or more form data parameters are missing in the HTTP request.");
-            }
+             }
+            // if (!UserName.validUserToken(UserToken)) {
+               //  return "{\"error\": \"You don't appear to be logged in.\"}";
+            // }
             System.out.println("Scores/update UserName=" + UserName);
 
             PreparedStatement ps = Main.db.prepareStatement("UPDATE Users SET UserScore = ? WHERE UserName=?");

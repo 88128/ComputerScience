@@ -91,3 +91,27 @@ table {
     border-radius: 8px;
     padding-left: 64px;
 }
+
+.normalButton {
+    box-shadow: 0px 0px 0px 2px #0044ff;
+    background-color:#20aec7;
+    border-radius:10px;
+    border:1px solid #3c00ff;
+    display:inline-block;
+    cursor:pointer;
+    color:#000000;
+    font-family:Arial;
+    font-size:19px;
+    padding:12px 37px;
+    text-decoration:none;
+    text-shadow:0px 1px 0px #283966;
+}
+.myButton:hover {
+    background-color:#000000;
+}
+.myButton:active {
+    position:relative;
+    top:1px;
+}
+
+}
