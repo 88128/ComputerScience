@@ -33,7 +33,7 @@ function login(event) {
 
 function logout() {
 
-    fetch("/user/logout", {method: 'post'}
+    fetch("/Users/logout", {method: 'post'}
     ).then(response => response.json()
     ).then(responseData => {
         if (responseData.hasOwnProperty('error')) {
@@ -45,7 +45,6 @@ function logout() {
             Cookies.remove("UserName");
             Cookies.remove("UserToken");
 
-            window.location.href = '/client/index.html';
 
         }
     });

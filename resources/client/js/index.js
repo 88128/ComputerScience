@@ -1,5 +1,5 @@
 function pageLoad() {
-
+    checkLogin();
     let now = new Date();
 
     let myHTML = '<div style="text-align:center;">'
@@ -13,4 +13,39 @@ function pageLoad() {
         + '</div>';
 
     document.getElementById("testDiv").innerHTML = myHTML;
+
+    document.getElementById("logoutButton").addEventListener("click", logout);
+
+}
+
+function checkLogin(){
+    let userToken = Cookies.get("UserToken");
+
+    if (userToken === undefined){
+        window.location.href = '/client/login.html';
+    }
+
+}
+
+function logout() {
+
+    alert("You are logged out. See you again soon!");
+
+    fetch("/Users/logout", {method: 'post'}
+    ).then(response => response.json()
+    ).then(responseData => {
+        if (responseData.hasOwnProperty('error')) {
+
+            alert(responseData.error);
+
+        } else {
+
+            Cookies.remove("UserName");
+            Cookies.remove("UserToken");
+
+            window.location.href = '/client/login.html';
+
+        }
+    });
+
 }

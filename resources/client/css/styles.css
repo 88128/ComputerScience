@@ -1,11 +1,12 @@
 body {
     background-color: lightblue;
-    margin: 0;
+    margin-right: 50px;
+    margin-legt: 50px;
     font-family: 'Arial', serif;
 }
 
 h1 {
-    margin-top:0;
+    margin-top:10px;
 }
 
 #content {
@@ -93,25 +94,45 @@ table {
 }
 
 .normalButton {
-    box-shadow: 0px 0px 0px 2px #0044ff;
-    background-color:#20aec7;
+    box-shadow: 0px 0px 0px 2px black;
+    background-color: #3BB9FF;
     border-radius:10px;
-    border:1px solid #3c00ff;
+    border:1px solid black;
     display:inline-block;
     cursor:pointer;
-    color:#000000;
+    color:black;
+    font-family:Arial;
+    font-size:19px;
+    padding:12px 37px;
+    text-decoration:none;
+    text-shadow:0px 1px 0px black;
+}
+.normalButton:hover {
+    background-color:#00ff00;
+}
+.normalButton:active {
+    position:relative;
+    top:1px;
+}
+
+.logoutButton {
+    box-shadow: 0px 0px 0px 2px black;
+    background-color:#ff0000;
+    border-radius:10px;
+    border:1px solid black;
+    display:inline-block;
+    cursor:pointer;
+    color:white;
     font-family:Arial;
     font-size:19px;
     padding:12px 37px;
     text-decoration:none;
     text-shadow:0px 1px 0px #283966;
 }
-.myButton:hover {
-    background-color:#000000;
+.normalButton:hover {
+    background-color:#00ff00;
 }
-.myButton:active {
+.normalButton:active {
     position:relative;
     top:1px;
-}
-
 }
