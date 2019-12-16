@@ -4,7 +4,7 @@ function pageLoad() {
 
     let myHTML = '<div style="text-align:center;">'
         + '<h1>Welcome To My Quiz Application!</h1>'
-        + '<img src="/client/img/logo.png"  alt="Logo"/>'
+        + '<img src="/client/img/Logo.png"  alt="Logo"/>'
         + '<div style="font-style: italic;">'
 
 
@@ -14,33 +14,33 @@ function pageLoad() {
 
     document.getElementById("testDiv").innerHTML = myHTML;
 
-    document.getElementById("logoutButton").addEventListener("click", logout);
-
+   document.getElementById("logoutButton").addEventListener("click", logout);
 }
 
 function checkLogin(){
     let userToken = Cookies.get("UserToken");
 
     if (userToken === undefined){
-        window.location.href = '/client/login.html';
+        window.location.href = "/client/login.html";
     }
 
 }
 
-function deleteuser(){
-    fetch("/Users/delete", {method:'post'})
-).then(response => response.json()
-).then(responseData => {
-    if (responseData.hasOwnProperty('error')) {
-        alert(responseData.error);
-    } else {
-        alert("Your Account has been deleted :( ");
-        Cookies.remove("UserName");
-        Cookies.remove("UserToken");
-        window.location.href = '/client/login.html';
+function deleteuser() {
+    alert("You Have Been Removed!");
+// code for removing user from database
+    fetch('/Users/delete', {method: 'post', body: ??} // Steve?
+    ).then(response => response.json()
+    ).then(data => {
 
-    }
+        if (data.hasOwnProperty('error')) {
+            alert(data.error);
+        } else {
+            window.location.href = '/client/login.html';
+        }
+    });
 }
+
 
 function logout() {
 

@@ -129,6 +129,22 @@ table {
     text-decoration:none;
     text-shadow:0px 1px 0px #283966;
 }
+
+.loginButton {
+    box-shadow: 0px 0px 0px 2px black;
+    background-color:#00ff00;
+    border-radius:10px;
+    border:1px solid black;
+    display:inline-block;
+    cursor:pointer;
+    color:white;
+    font-family:Arial;
+    font-size:19px;
+    padding:12px 37px;
+    text-decoration:none;
+    text-shadow:0px 1px 0px #283966;
+}
+
 .normalButton:hover {
     background-color:#00ff00;
 }

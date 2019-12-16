@@ -1,3 +1,5 @@
+let correctAnswers = [];
+
 /*-------------------------------------------------------
   A utility function to extract the query string parameters
   and return them as a map of key-value pairs
@@ -29,16 +31,18 @@ function displayQuestionsIfReady(allQuestionsHTML) {
     }
 }
 
+function checkLogin(){
+    let userToken = Cookies.get("UserToken");
+
+    if (userToken === undefined){
+        window.location.href = '/client/login.html';
+    }
+
+}
+
 function pageLoad() {
 
-    function checkLogin(){
-        let userToken = Cookies.get("UserToken");
 
-        if (userToken === undefined){
-            window.location.href = '/client/login.html';
-        }
-
-    }
 
     let qs = getQueryStringParameters();
 
@@ -63,7 +67,10 @@ function pageLoad() {
                 questionHTML += '<select id="question' + question.QuestionNumber + '" name="question' + question.QuestionNumber + '">\n';
 
                 for (let answer of answers) {
-                    questionHTML += '<option value="' + answer.AnswerID + '">' + answer.Answer + '</option>\n';
+                    questionHTML += '<option value=' + answer.AnswerID + '>' + answer.Answer + '</option>\n';
+
+                    if (answer.Correct) correctAnswers.push(answer.AnswerID);
+
                 }
 
                 questionHTML += '</select></div>';
@@ -80,5 +87,26 @@ function pageLoad() {
 
 
     });
+
+    document.getElementById("questionForm").addEventListener("submit", markQuiz);
+
+}
+
+function markQuiz(event) {
+
+    console.log(correctAnswers);
+
+    event.preventDefault();
+
+    let correctCount = 0;
+
+    for (let i = 1; i <= 10; i++) {
+        let answer = document.getElementById("question" + i).value;
+        console.log(answer);
+        if (correctAnswers.includes(String(answer))) correctCount++;
+    }
+
+    alert("You got " + correctCount + " out of 10!");
+    window.location.href = "/client/index.html";
 
 }
