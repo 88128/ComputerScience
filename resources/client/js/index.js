@@ -27,6 +27,21 @@ function checkLogin(){
 
 }
 
+function deleteuser(){
+    fetch("/Users/delete", {method:'post'})
+).then(response => response.json()
+).then(responseData => {
+    if (responseData.hasOwnProperty('error')) {
+        alert(responseData.error);
+    } else {
+        alert("Your Account has been deleted :( ");
+        Cookies.remove("UserName");
+        Cookies.remove("UserToken");
+        window.location.href = '/client/login.html';
+
+    }
+}
+
 function logout() {
 
     alert("You are logged out. See you again soon!");

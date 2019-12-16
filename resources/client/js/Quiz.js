@@ -31,6 +31,15 @@ function displayQuestionsIfReady(allQuestionsHTML) {
 
 function pageLoad() {
 
+    function checkLogin(){
+        let userToken = Cookies.get("UserToken");
+
+        if (userToken === undefined){
+            window.location.href = '/client/login.html';
+        }
+
+    }
+
     let qs = getQueryStringParameters();
 
     let quizId = qs['id'];
