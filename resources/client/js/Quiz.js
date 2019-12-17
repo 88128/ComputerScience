@@ -105,6 +105,18 @@ function markQuiz(event) {
         console.log(answer);
         if (correctAnswers.includes(String(answer))) correctCount++;
     }
+// This Code Will Update Score
+    let oldscore = 0;
+    data.append("UserName", Cookies.get("UserName"));
+
+    fetch('/Users/getscore/' + UserName, {method: 'get'}
+    ).then(response => response.json()
+    ).then(oldscore => {
+        alert(oldscore);
+    }
+
+
+
 
     alert("You got " + correctCount + " out of 10!");
     window.location.href = "/client/index.html";

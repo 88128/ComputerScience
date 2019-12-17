@@ -28,17 +28,30 @@
 <div>
     <form id="newuserform">
         <div class="newuserdiv">
-            <label for="username">Username: </label>
+            <label for="UserName">UserName: </label>
             <input type="text" name="UserName" id="UserName">
         </div>
         <div class="newuserdiv">
-            <label for="password">Password: </label>
+            <label for="UserPassword">Password: </label>
             <input type="password" name="UserPassword" id="UserPassword">
         </div>
-        <label for="username">Username: </label>
-        <input type=select name="UserSkillLevel" id="UserSkillLevel">
+        <div>
+            <fieldset>
+                <legend></legend>
+                <p>
+                    <label>Select Skill Level</label>
+                    <select id = "UserSkillLevel">
+                        <option value = "1">1</option>
+                        <option value = "2">2</option>
+                        <option value = "3">3</option>
+                        <option value = "4">4</option>
+                        <option value = "5">5</option>
+                    </select>
+                </p>
+            </fieldset>
+        </div>
         <div class="newuserdiv">
-            <input type="submit" class="loginButton" value="Create New User" id="newuserButton">
+            <input type="submit" class="newuserButton" value="Create New User" onclick="newuser();" id="newuserButton">
         </div>
     </form>
 </div>

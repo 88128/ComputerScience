@@ -31,8 +31,17 @@ function login(event) {
     });
 }
 
-function newuser(){
+function newuser(event){
+    alert("Function Called");
     event.preventDefault();
+    if(document.getElementById("UserName").value.trim() === ''){
+             alert("No!");
+        return;
+    }
+        if(document.getElementById("UserPassword").value.trim() === ''){
+            alert("Nope");
+        return;
+    }
 
     const form = document.getElementById("newuserform");
     const formData = new FormData(form);
@@ -44,10 +53,9 @@ function newuser(){
         if (responseData.hasOwnProperty('error')) {
             alert(responseData.error);
         } else {
-            Cookies.set("UserName", responseData.UserName);
-            Cookies.set("UserToken", responseData.UserToken);
+            alert("User Created.");
 
-            window.location.href = '/client/index.html';
+
         }
     });
 

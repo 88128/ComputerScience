@@ -33,7 +33,7 @@ function deleteuser() {
 
     alert("You Have Been Removed!");
 // code for removing user from database
-    fetch('/Users/delete', {method: 'post', body: data} // Steve?
+    fetch('/Users/delete', {method: 'post', body: data}
     ).then(response => response.json()
     ).then(data => {
 

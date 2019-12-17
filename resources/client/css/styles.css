@@ -93,6 +93,21 @@ table {
     padding-left: 64px;
 }
 
+.newuserButton{
+    box-shadow: 0px 0px 0px 2px black;
+    background-color: #3BB9FF;
+    border-radius:10px;
+    border:1px solid black;
+    display:inline-block;
+    cursor:pointer;
+    color:black;
+    font-family:Arial;
+    font-size:19px;
+    padding:12px 37px;
+    text-decoration:none;
+    text-shadow:0px 1px 0px black;
+}
+
 .normalButton {
     box-shadow: 0px 0px 0px 2px black;
     background-color: #3BB9FF;
