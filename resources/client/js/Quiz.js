@@ -106,14 +106,14 @@ function markQuiz(event) {
         if (correctAnswers.includes(String(answer))) correctCount++;
     }
 // This Code Will Update Score
-    let oldscore = 0;
+   /* let oldscore = 0;
     data.append("UserName", Cookies.get("UserName"));
 
     fetch('/Users/getscore/' + UserName, {method: 'get'}
     ).then(response => response.json()
     ).then(oldscore => {
         alert(oldscore);
-    }
+    }*/
 
 
 
