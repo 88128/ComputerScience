@@ -125,17 +125,17 @@ public class UserController {
     @Path("delete")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
-    public String deleteThing(@FormDataParam("UserID") Integer UserID) {
+    public String deleteThing(@FormDataParam("UserName") String UserName) {
 
         try {
-            if (UserID == null) {
+            if (UserName == null) {
                 throw new Exception("One or more form data parameters are missing in the HTTP request.");
             }
-            System.out.println("thing/delete UserID=" + UserID);
+            System.out.println("thing/delete UserName=" + UserName);
 
-            PreparedStatement ps = Main.db.prepareStatement("DELETE FROM Users WHERE UserID = ?");
+            PreparedStatement ps = Main.db.prepareStatement("DELETE FROM Users WHERE UserName = ?");
 
-            ps.setInt(1, UserID);
+            ps.setString(1, UserName);
 
             ps.execute();
 

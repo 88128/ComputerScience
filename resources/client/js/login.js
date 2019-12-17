@@ -31,6 +31,30 @@ function login(event) {
     });
 }
 
+function newuser(){
+    event.preventDefault();
+
+    const form = document.getElementById("newuserform");
+    const formData = new FormData(form);
+
+    fetch("/Users/new", {method: 'post', body: formData}
+    ).then(response => response.json()
+    ).then(responseData => {
+
+        if (responseData.hasOwnProperty('error')) {
+            alert(responseData.error);
+        } else {
+            Cookies.set("UserName", responseData.UserName);
+            Cookies.set("UserToken", responseData.UserToken);
+
+            window.location.href = '/client/index.html';
+        }
+    });
+
+
+}
+
+
 function logout() {
 
     fetch("/Users/logout", {method: 'post'}

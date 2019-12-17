@@ -27,9 +27,13 @@ function checkLogin(){
 }
 
 function deleteuser() {
+
+    let data = new FormData();
+    data.append("UserName", Cookies.get("UserName"));
+
     alert("You Have Been Removed!");
 // code for removing user from database
-    fetch('/Users/delete', {method: 'post', body: ??} // Steve?
+    fetch('/Users/delete', {method: 'post', body: data} // Steve?
     ).then(response => response.json()
     ).then(data => {
 
