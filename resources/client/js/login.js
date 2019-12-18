@@ -5,9 +5,16 @@ function pageLoad() {
         logout();
     } else {
         document.getElementById("loginButton").addEventListener("click", login);
+        document.getElementById("newUserButton").addEventListener("click", newuser);
+        document.getElementById("createNewButton").addEventListener("click", newUserButton);
     }
-
 }
+
+function newUserButton(){
+    alert("Function Called");
+    //document.getElementById("loginDiv").style.display = 'none';
+    //document.getElementById("newuserdiv").style.display = 'hidden';
+ }
 
 function login(event) {
 
@@ -30,18 +37,21 @@ function login(event) {
         }
     });
 }
-
 function newuser(event){
-    alert("Function Called");
+
+    // alert("Function Called");
     event.preventDefault();
-    if(document.getElementById("UserName").value.trim() === ''){
-             alert("No!");
+
+    if(document.getElementById("NewUserName").value.trim() === ""){
+             alert("Please Provide A Sensible Username");
         return;
     }
-        if(document.getElementById("UserPassword").value.trim() === ''){
-            alert("Nope");
+        if(document.getElementById("NewUserPassword").value.trim() === ""){
+            alert("Please Provide A Password");
         return;
     }
+
+   // alert("Step 2 Ok");
 
     const form = document.getElementById("newuserform");
     const formData = new FormData(form);
@@ -51,15 +61,12 @@ function newuser(event){
     ).then(responseData => {
 
         if (responseData.hasOwnProperty('error')) {
-            alert(responseData.error);
+          //  alert(responseData.error);
+            alert("Username is not Unique Please Try Another.");
         } else {
             alert("User Created.");
-
-
         }
     });
-
-
 }
 
 

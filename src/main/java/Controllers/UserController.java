@@ -1,6 +1,5 @@
 package Controllers;
         import Server.Main;
-
         import org.glassfish.jersey.media.multipart.FormDataParam;
         import org.json.simple.JSONArray;
         import org.json.simple.JSONObject;
@@ -61,6 +60,38 @@ public class UserController {
             ps.setString(2, UserName);
             ps.execute();
             return "{\"status\": \"OK\"}";
+
+        } catch (Exception exception) {
+            System.out.println("Database error: " + exception.getMessage());
+            return "{\"error\": \"Unable to update item, please see server console for more info.\"}";
+        }
+    }
+
+    @POST
+    @Path("incrementscore")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Produces(MediaType.APPLICATION_JSON)
+    public String incrementUserScore(@FormDataParam("UserName") String UserName, @FormDataParam("ScoreIncrease") Integer ScoreIncrease, @CookieParam("UserToken") String UserToken) {
+        try {
+            if (UserName == null || ScoreIncrease == null) {
+                throw new Exception("One or more form data parameters are missing in the HTTP request.");
+            }
+            // if (!UserName.validUserToken(UserToken)) {
+            //  return "{\"error\": \"You don't appear to be logged in.\"}";
+            // }
+            System.out.println("Users/incrementscore UserName=" + UserName);
+
+            PreparedStatement ps1 = Main.db.prepareStatement("UPDATE Users SET UserScore = UserScore + ? WHERE UserName = ?");
+            ps1.setInt(1, ScoreIncrease);
+            ps1.setString(2, UserName);
+            ps1.execute();
+
+            PreparedStatement ps2 = Main.db.prepareStatement("SELECT UserScore FROM Users WHERE UserName = ?");
+            ps2.setString(1, UserName);
+            ResultSet results = ps2.executeQuery();
+            Integer score = results.getInt(1);
+
+            return "{\"newscore\": \"" + score + "\"}";
 
         } catch (Exception exception) {
             System.out.println("Database error: " + exception.getMessage());

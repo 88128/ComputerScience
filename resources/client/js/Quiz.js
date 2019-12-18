@@ -105,20 +105,16 @@ function markQuiz(event) {
         console.log(answer);
         if (correctAnswers.includes(String(answer))) correctCount++;
     }
-// This Code Will Update Score
-   /* let oldscore = 0;
+
+    let data = new FormData();
     data.append("UserName", Cookies.get("UserName"));
+    data.append("ScoreIncrease", correctCount);
 
-    fetch('/Users/getscore/' + UserName, {method: 'get'}
-    ).then(response => response.json()
-    ).then(oldscore => {
-        alert(oldscore);
-    }*/
-
-
-
-
-    alert("You got " + correctCount + " out of 10!");
-    window.location.href = "/client/index.html";
+    fetch('/Users/incrementscore/', {method: 'post', body: data}
+    ).then(raw => raw.json()
+    ).then(response => {
+        alert("You got " + correctCount + " out of 10! Your new score is " + response.newscore);
+        window.location.href = "/client/index.html";
+    });
 
 }
