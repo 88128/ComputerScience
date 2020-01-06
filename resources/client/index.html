@@ -6,6 +6,7 @@
     <div>
         <a href="/client/QuizSelection.html"><button class="normalButton">Select A Quiz Here!</button></a>
         <a href="/client/leaderboard.html"><button class="normalButton">View Leaderboard Here!</button></a>
+        <script src="https://www.chartjs.org/dist/2.9.3/Chart.min.js"></script>
         <button class="normalButton" onclick="deleteuser()">Delete Account</button>
         <button class="logoutButton" id="logoutButton" style="float: right;">Logout</button>
 
@@ -22,6 +23,9 @@
 <div id="loggedInDetails"></div>
 <div id="content">
     <div id="testDiv"></div>
+    <div>
+        <canvas id="chartCanvas" style="width:800px; height:600px;"></canvas>
+    </div>
 </div>
 </div>
 

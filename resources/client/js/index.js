@@ -1,4 +1,51 @@
 function pageLoad() {
+
+    const canvas = document.getElementById('chartCanvas');
+    const context = canvas.getContext('2d');
+
+    let myChart = new Chart(context, {
+        type: 'bar',
+        data: {
+            labels: [
+                '1',
+                '2',
+                '3',
+                '4',
+                '5',
+                '6'
+            ],
+            datasets: [{
+                label: 'Number of things',
+                data: [
+                    12,
+                    19,
+                    3,
+                    5,
+                    2,
+                    3
+                ],
+                backgroundColor: [
+                    'red',
+                    'red',
+                    'red',
+                    'red',
+                    'red',
+                    'red'
+                ]
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            },
+            responsive: false
+        }
+    });
+
     checkLogin();
     let now = new Date();
 
