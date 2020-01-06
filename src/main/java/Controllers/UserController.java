@@ -41,6 +41,33 @@ public class UserController {
         }
     }
 
+    @GET
+    @Path("get/{UserName}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getThing(@PathParam("UserName") String UserName){
+        try {
+            if (UserName == null) {
+                throw new Exception("Thing's 'Username' is missing in the HTTP request's URL.");
+            }
+            System.out.println("thing/get/" + UserName);
+            JSONObject item = new JSONObject();
+
+            PreparedStatement ps = Main.db.prepareStatement("SELECT UserName, UserSkillLevel FROM Users WHERE UserName = ?");
+            ps.setString(1, UserName);
+
+            ResultSet results = ps.executeQuery();
+            if (results.next()) {
+                item.put("UserSkillLevel", results.getInt(2));
+            }
+            return item.toString();
+        } catch (Exception exception) {
+            System.out.println("Database error: " + exception.getMessage());
+            return "{\"error\": \"Unable to get item, please see server console for more info.\"}";
+        }
+    }
+
+
+
     @POST
     @Path("update")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
@@ -124,9 +151,9 @@ public class UserController {
     }
 
     @GET
-    @Path("get/{Username}")
+    @Path("getskill/{Username}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getThing(@PathParam("Username") String UserName){
+    public String getskill(@PathParam("Username") String UserName){
         try {
             if (UserName == null) {
                 throw new Exception("Thing's 'Username' is missing in the HTTP request's URL.");

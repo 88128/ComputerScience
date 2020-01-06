@@ -10,17 +10,24 @@ function pageLoad() {
     ).then(response => response.json()
     ).then(quizzes => {
 
-        for (let quiz of quizzes) {
+        fetch('/Users/get/' + Cookies.get("UserName"), {method: 'get'}
+        ).then(response => response.json()
+        ).then(user => {
 
-            QuizSelectionHTML += `<tr>` +
-                `<td><a href="/client/Quiz.html?id=${quiz.QuizID}">${quiz.QuizTitle}</a></td>` +
-                `<td>${quiz.QuizSkillLevel}</td>` +
-                `</tr>`;
-        }
+            quizzes = quizzes.filter(q => q.QuizSkillLevel === user.UserSkillLevel);
 
-        QuizSelectionHTML += '</table>';
+            for (let quiz of quizzes) {
 
-        document.getElementById("listDiv").innerHTML = QuizSelectionHTML;
+                QuizSelectionHTML += `<tr>` +
+                    `<td><a href="/client/Quiz.html?id=${quiz.QuizID}">${quiz.QuizTitle}</a></td>` +
+                    `<td>${quiz.QuizSkillLevel}</td>` +
+                    `</tr>`;
+            }
 
+            QuizSelectionHTML += '</table>';
+
+            document.getElementById("listDiv").innerHTML = QuizSelectionHTML;
+
+        });
     });
 }

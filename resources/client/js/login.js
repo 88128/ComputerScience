@@ -1,5 +1,7 @@
 function pageLoad() {
 
+    document.getElementById("newuserdiv").style.display = 'none';
+
     if(window.location.search === '?logout') {
         document.getElementById('content').innerHTML = '<h1>Logging out, please wait...</h1>';
         logout();
