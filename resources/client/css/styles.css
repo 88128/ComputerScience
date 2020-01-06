@@ -1,7 +1,7 @@
 body {
     background-color: lightblue;
     margin-right: 50px;
-    margin-legt: 50px;
+    margin-left: 50px;
     font-family: 'Arial', serif;
 }
 
@@ -130,7 +130,9 @@ table {
     top:1px;
 }
 
-.NewUserButton{
+.NewUserButton {
+}
+
 .normalButton {
     box-shadow: 0px 0px 0px 2px black;
     background-color: #3BB9FF;
@@ -152,8 +154,6 @@ table {
     position:relative;
     top:1px;
 }
-}
-
 
 .logoutButton {
     box-shadow: 0px 0px 0px 2px black;

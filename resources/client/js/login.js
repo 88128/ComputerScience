@@ -11,9 +11,8 @@ function pageLoad() {
 }
 
 function newUserButton(){
-    alert("Function Called");
-    //document.getElementById("loginDiv").style.display = 'none';
-    //document.getElementById("newuserdiv").style.display = 'hidden';
+     document.getElementById("content").style.display = 'none';
+     document.getElementById("newuserdiv").style.display = 'block';
  }
 
 function login(event) {
