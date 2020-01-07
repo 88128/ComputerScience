@@ -1,6 +1,7 @@
 function pageLoad() {
 
     document.getElementById("newuserdiv").style.display = 'none';
+    document.getElementById("BackButton").style.display = 'none';
 
     if(window.location.search === '?logout') {
         document.getElementById('content').innerHTML = '<h1>Logging out, please wait...</h1>';
@@ -9,12 +10,20 @@ function pageLoad() {
         document.getElementById("loginButton").addEventListener("click", login);
         document.getElementById("newUserButton").addEventListener("click", newuser);
         document.getElementById("createNewButton").addEventListener("click", newUserButton);
+        document.getElementById("BackButton").addEventListener("click", goback);
     }
+}
+
+function goback(event){
+    document.getElementById("content").style.display = 'block';
+    document.getElementById("newuserdiv").style.display = 'none';
+    document.getElementById("BackButton").style.display = 'none';
 }
 
 function newUserButton(){
      document.getElementById("content").style.display = 'none';
      document.getElementById("newuserdiv").style.display = 'block';
+    document.getElementById("BackButton").style.display = 'block';
  }
 
 function login(event) {
@@ -66,6 +75,7 @@ function newuser(event){
             alert("Username is not Unique Please Try Another.");
         } else {
             alert("User Created.");
+            window.location.href = '/client/login.html';
         }
     });
 }

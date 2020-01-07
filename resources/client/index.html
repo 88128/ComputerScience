@@ -2,16 +2,7 @@
 <html>
 
 <head>
-
-    <div>
-        <a href="/client/QuizSelection.html"><button class="normalButton">Select A Quiz Here!</button></a>
-        <a href="/client/leaderboard.html"><button class="normalButton">View Leaderboard Here!</button></a>
-        <script src="https://www.chartjs.org/dist/2.9.3/Chart.min.js"></script>
-        <button class="normalButton" onclick="deleteuser()">Delete Account</button>
-        <button class="logoutButton" id="logoutButton" style="float: right;">Logout</button>
-
-    </div>
-
+    <script src="https://www.chartjs.org/dist/2.9.3/Chart.min.js"></script>
     <title>Quiz Application</title>
     <link rel="stylesheet" type="text/css" href="/client/css/styles.css">
     <script src="/client/js/index.js"></script>
@@ -22,7 +13,15 @@
 <body onload="pageLoad()">
 <div id="loggedInDetails"></div>
 <div id="content">
-    <div id="testDiv"></div>
+
+    <div>
+        <a href="/client/QuizSelection.html"><button class="normalButton">Select A Quiz Here!</button></a>
+        <a href="/client/leaderboard.html"><button class="normalButton">View Leaderboard Here!</button></a>
+        <button class="normalButton" onclick="deleteuser()">Delete Account</button>
+        <button class="logoutButton" id="logoutButton" style="float: right;">Logout</button>
+    </div>
+
+        <div id="testDiv"></div>
     <div>
         <canvas id="chartCanvas" style="width:800px; height:600px;"></canvas>
     </div>
