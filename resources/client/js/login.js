@@ -47,21 +47,31 @@ function login(event) {
         }
     });
 }
-function newuser(event){
+function newuser(event) {
 
     // alert("Function Called");
     event.preventDefault();
 
-    if(document.getElementById("NewUserName").value.trim() === ""){
-             alert("Please Provide A Sensible Username");
+    if (document.getElementById("NewUserName").value.trim() === "") {
+        alert("Please Provide A Username");
         return;
     }
-        if(document.getElementById("NewUserPassword").value.trim() === ""){
-            alert("Please Provide A Password");
+    if (document.getElementById("NewUserPassword").value.trim() === "") {
+        alert("Please Provide A Password");
         return;
     }
 
-   // alert("Step 2 Ok");
+    let newPassword = document.getElementById("NewUserPassword").value;
+
+    console.log(newPassword);
+
+    if (newPassword.length < 5) {
+        alert("Please Provide A Password Greater than 5 characters long");
+        return;
+    }
+
+
+    // alert("Step 2 Ok");
 
     const form = document.getElementById("newuserform");
     const formData = new FormData(form);
@@ -71,7 +81,7 @@ function newuser(event){
     ).then(responseData => {
 
         if (responseData.hasOwnProperty('error')) {
-          //  alert(responseData.error);
+            //  alert(responseData.error);
             alert("Username is not Unique Please Try Another.");
         } else {
             alert("User Created.");
